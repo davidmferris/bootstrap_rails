@@ -19,16 +19,42 @@ module Fentis
                  desc: "Don't run bundle install"
 
     def finish_template
-      invoke :fentis
+      invoke :fentis_setup
       super
     end
 
-    def fentis
+    def fentis_setup
       invoke :custom_gemfile
+      invoke :install_devise
+      invoke :install_activeadmin
+
+      invoke :create_database
+      invoke :setup_rspec
+      invoke :initial_commit
+    end
+
+    def create_database
+      build :create_database
     end
 
     def custom_gemfile
       build :replace_gemfile
+    end
+
+    def initial_commit
+      build :initial_commit
+    end
+
+    def install_activeadmin
+      build :install_activeadmin
+    end
+
+    def install_devise
+      build :install_devise
+    end
+
+    def setup_rspec
+      build :setup_rspec
     end
 
     protected
